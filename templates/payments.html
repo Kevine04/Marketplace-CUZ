@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Payments</h2>
+<form method="post" class="form-grid">
+  <select name="tenant_id" required>
+    <option value="">Select tenant</option>
+    {% for t in tenants %}<option value="{{ t.id }}">{{ t.full_name }}</option>{% endfor %}
+  </select>
+  <input type="month" name="month" required>
+  <input type="number" name="amount_expected" step="0.01" placeholder="Expected amount" required>
+  <input type="number" name="amount_paid" step="0.01" placeholder="Amount paid" required>
+  <input type="date" name="payment_date" required>
+  <input name="payment_method" placeholder="Method (Cash/Mobile)" required>
+  <input name="recorded_by" placeholder="Recorded by" value="admin" required>
+  <button>Record payment</button>
+</form>
+
+<h3>Records for {{ month }}</h3>
+<table>
+  <tr><th>Tenant</th><th>Month</th><th>Expected</th><th>Paid</th><th>Balance</th><th>Status</th><th>Receipt</th></tr>
+  {% for p in payments %}
+  <tr>
+    <td>{{ p.tenant.full_name }}</td><td>{{ p.month }}</td><td>K{{ '%.2f'|format(p.amount_expected) }}</td>
+    <td>K{{ '%.2f'|format(p.amount_paid) }}</td><td>K{{ '%.2f'|format(p.balance_remaining) }}</td><td>{{ p.status }}</td>
+    <td><a href="{{ url_for('receipt', payment_id=p.id) }}">{{ p.receipt_reference }}</a></td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

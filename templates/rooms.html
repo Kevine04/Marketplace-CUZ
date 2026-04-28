@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Rooms</h2>
+<form method="post" class="form-grid">
+  <input name="room_number" placeholder="Room number" required>
+  <input name="room_type" placeholder="Room type" required>
+  <input name="monthly_rent" type="number" step="0.01" placeholder="Monthly rent" required>
+  <input name="capacity" type="number" min="1" value="1" required>
+  <button>Add room</button>
+</form>
+<table>
+  <tr><th>Room</th><th>Type</th><th>Rent</th><th>Capacity</th><th>Occupancy</th><th>Status</th></tr>
+  {% for r in rooms %}
+  <tr>
+    <td>{{ r.room_number }}</td><td>{{ r.room_type }}</td><td>K{{ '%.2f'|format(r.monthly_rent) }}</td>
+    <td>{{ r.capacity }}</td><td>{{ r.current_occupancy }}</td>
+    <td>{{ 'Occupied' if r.current_occupancy >= r.capacity else 'Available' }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

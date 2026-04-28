@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Tenants</h2>
+<form method="get" class="inline-form">
+  <input name="q" placeholder="Search name, phone, ID" value="{{ q }}">
+  <button>Search</button>
+</form>
+<form method="post" class="form-grid">
+  <input name="full_name" placeholder="Full name" required>
+  <input name="phone" placeholder="Phone" required>
+  <input name="id_number" placeholder="NRC / Student ID" required>
+  <input name="gender" placeholder="Gender" required>
+  <input name="emergency_contact" placeholder="Emergency contact" required>
+  <input type="date" name="date_moved_in" required>
+  <button>Add tenant</button>
+</form>
+<table>
+  <tr><th>Name</th><th>Phone</th><th>ID</th><th>Status</th><th>Room</th><th>Actions</th></tr>
+  {% for t in tenants %}
+  <tr>
+    <td>{{ t.full_name }}</td><td>{{ t.phone }}</td><td>{{ t.id_number }}</td><td>{{ t.status }}</td>
+    <td>{% if t.current_assignment %}{{ t.current_assignment.room.room_number }}{% else %}-{% endif %}</td>
+    <td>
+      {% if t.status != 'moved out' %}
+      <form method="post" action="{{ url_for('move_out', tenant_id=t.id) }}"><button>Move Out</button></form>
+      {% endif %}
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

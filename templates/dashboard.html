@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Dashboard</h2>
+<div class="grid">
+  <div class="card"><strong>{{ active_tenants }}</strong><span>Active tenants</span></div>
+  <div class="card"><strong>{{ occupied_rooms }}/{{ total_rooms }}</strong><span>Occupied rooms</span></div>
+  <div class="card"><strong>{{ unpaid_count }}</strong><span>Unpaid/partial records</span></div>
+  <div class="card"><strong>K{{ '%.2f'|format(month_income) }}</strong><span>Income for {{ month }}</span></div>
+</div>
+{% endblock %}

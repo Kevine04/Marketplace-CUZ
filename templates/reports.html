@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Reports ({{ month }})</h2>
+<div class="grid">
+  <div class="card"><strong>K{{ '%.2f'|format(monthly_income) }}</strong><span>Monthly income</span></div>
+  <div class="card"><strong>K{{ '%.2f'|format(outstanding) }}</strong><span>Outstanding balances</span></div>
+  <div class="card"><strong>{{ paid|length }}</strong><span>Paid tenants</span></div>
+  <div class="card"><strong>{{ unpaid|length }}</strong><span>Unpaid/partial tenants</span></div>
+</div>
+
+<h3>Room occupancy</h3>
+<table>
+  <tr><th>Room</th><th>Occupancy</th><th>Status</th></tr>
+  {% for r in rooms %}
+  <tr><td>{{ r.room_number }}</td><td>{{ r.current_occupancy }}/{{ r.capacity }}</td><td>{{ 'Occupied' if r.current_occupancy >= r.capacity else 'Available' }}</td></tr>
+  {% endfor %}
+</table>
+
+<h3>Moved out tenants</h3>
+<table>
+  <tr><th>Name</th><th>Date moved out</th></tr>
+  {% for t in moved %}<tr><td>{{ t.full_name }}</td><td>{{ t.date_moved_out }}</td></tr>{% endfor %}
+</table>
+{% endblock %}
