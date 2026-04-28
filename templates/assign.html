@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Assign / Transfer Room</h2>
+<form method="post" class="form-grid">
+  <select name="tenant_id" required>
+    <option value="">Select tenant</option>
+    {% for t in tenants %}<option value="{{ t.id }}">{{ t.full_name }}</option>{% endfor %}
+  </select>
+  <select name="room_id" required>
+    <option value="">Select room</option>
+    {% for r in rooms %}<option value="{{ r.id }}">{{ r.room_number }} ({{ r.current_occupancy }}/{{ r.capacity }})</option>{% endfor %}
+  </select>
+  <button>Save assignment</button>
+</form>
+{% endblock %}

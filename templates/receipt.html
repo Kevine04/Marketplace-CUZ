@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Receipt</h2>
+<div class="receipt">
+  <p><strong>Reference:</strong> {{ payment.receipt_reference }}</p>
+  <p><strong>Tenant:</strong> {{ payment.tenant.full_name }}</p>
+  <p><strong>Room:</strong> {{ room.room_number if room else '-' }}</p>
+  <p><strong>Month:</strong> {{ payment.month }}</p>
+  <p><strong>Expected:</strong> K{{ '%.2f'|format(payment.amount_expected) }}</p>
+  <p><strong>Paid:</strong> K{{ '%.2f'|format(payment.amount_paid) }}</p>
+  <p><strong>Balance:</strong> K{{ '%.2f'|format(payment.balance_remaining) }}</p>
+  <p><strong>Status:</strong> {{ payment.status }}</p>
+  <p><strong>Date:</strong> {{ payment.payment_date }}</p>
+  <p><strong>Method:</strong> {{ payment.payment_method }}</p>
+  <p><strong>Recorded by:</strong> {{ payment.recorded_by }}</p>
+</div>
+<button onclick="window.print()">Print receipt</button>
+{% endblock %}
